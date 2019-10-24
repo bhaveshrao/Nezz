@@ -1,0 +1,6 @@
+module Pods_BlindTune {
+  umbrella header "Pods-BlindTune-umbrella.h"
+
+  export *
+  module * { export * }
+}
