@@ -25,6 +25,7 @@ class ParentDashboardViewController: UIViewController {
     var notificationArray = [Dictionary<String, Any>]()
     
     var isBackClicked = false
+    static var isFromViewDidAppear = false
     var controller:UIViewController!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -150,8 +151,28 @@ class ParentDashboardViewController: UIViewController {
             break;
         }
         
-        self.chekcForNotification()
         
+        ParentDashboardViewController.isFromViewDidAppear = true
+        
+        
+        if !AppDelegate.isSkipClicked {
+            
+            let dataBaseRefUser = Database.database().reference(withPath: "Users")
+            
+            let tempD =    ["email": AppDelegate.user.email,
+                             "password": "",
+                             "username": AppDelegate.user.username,
+                             "deviceId": Messaging.messaging().fcmToken!,
+                             "uid" : AppDelegate.user.uid,
+                             "badge" : 0
+                ] as [String : Any]
+            let childRef = dataBaseRefUser.child(AppDelegate.user.uid)
+            childRef.setValue(tempD)
+            
+        }
+     
+    self.chekcForNotification()
+
     }
     
     //MARK:- User Action
@@ -311,6 +332,8 @@ class ParentDashboardViewController: UIViewController {
         self.buttonAddPost.isSelected = false
         self.buttonSetting.isSelected = false
         
+        AppDelegate.delegateFlag = 0
+        
         self.imageViewActive.frame = CGRect(x: buttonHome.frame.origin.x, y: self.imageViewActive.frame.origin.y, width: buttonHome.frame.size.width, height: self.imageViewActive.frame.size.height)
         
         controller = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
@@ -359,13 +382,35 @@ class ParentDashboardViewController: UIViewController {
                     replyOnPost["replyTo"] as! String == AppDelegate.user.uid
                 })
                 
+                
+                self.notificationArray = self.notificationArray.sorted(by: { (value1, value2) -> Bool in
+                              TimeInterval(value1["timeCreated"] as! Double) >   TimeInterval(value2["timeCreated"] as! Double)
+                })
+                
+                if abs(self.notificationArray.count - AppDelegate.localNotificationCount) != 0 {
+                    
+                    let tempvalue = self.notificationArray.first
+                    if tempvalue!["replyBy"] as! String == tempvalue!["replyTo"] as! String {
+                        return
+                    }
+                }
+                
+                
                 if AppDelegate.localNotificationCount == -1 {
                     AppDelegate.localNotificationCount = self.notificationArray.count
                     
                     if let notificationCount = UserDefaults.standard.value(forKey: "localNotificationCount") {
                         self.labelNotificationCount.isHidden = false
-                        self.labelNotificationCount.text = "\(notificationCount as! Int)"
+                        self.labelNotificationCount.text = "\((notificationCount as! Int) + UIApplication.shared.applicationIconBadgeNumber)"
+                    }else if  UIApplication.shared.applicationIconBadgeNumber > 0 {
                         
+                        UserDefaults.standard.set( UIApplication.shared.applicationIconBadgeNumber , forKey: "localNotificationCount")
+                        
+                        self.labelNotificationCount.isHidden = false
+                        self.labelNotificationCount.text = "\(  UIApplication.shared.applicationIconBadgeNumber )"
+                        
+                        UIApplication.shared.applicationIconBadgeNumber = 0 
+
                     }
                     
                 }else{
@@ -383,13 +428,24 @@ class ParentDashboardViewController: UIViewController {
                                 UserDefaults.standard.set( UIApplication.shared.applicationIconBadgeNumber  + (notificationCount as! Int), forKey: "localNotificationCount")
                                 
                                 self.labelNotificationCount.isHidden = false
-                                
                                 self.labelNotificationCount.text = "\(  UIApplication.shared.applicationIconBadgeNumber  + (notificationCount as! Int) )"
+                                
+                                UIApplication.shared.applicationIconBadgeNumber = 0
                             }else{
                                 
-                                UserDefaults.standard.set((notificationCount as! Int) + UIApplication.shared.applicationIconBadgeNumber + 1, forKey: "localNotificationCount")
+                                if !(ParentDashboardViewController.isFromViewDidAppear) {
+                                    UserDefaults.standard.set((notificationCount as! Int) + UIApplication.shared.applicationIconBadgeNumber + 1, forKey: "localNotificationCount")
+                                                              
+                                                              self.labelNotificationCount.text = "\((notificationCount as! Int) + UIApplication.shared.applicationIconBadgeNumber + 1)"
+                                }else{
+                                    
+                                    UserDefaults.standard.set((notificationCount as! Int) + UIApplication.shared.applicationIconBadgeNumber, forKey: "localNotificationCount")
+                                                              self.labelNotificationCount.text = "\((notificationCount as! Int) + UIApplication.shared.applicationIconBadgeNumber)"
+                                    
+                                    ParentDashboardViewController.isFromViewDidAppear = false
+                                }
                                 
-                                self.labelNotificationCount.text = "\((notificationCount as! Int) + UIApplication.shared.applicationIconBadgeNumber + 1)"
+                          
                                 
                                 
                                 self.labelNotificationCount.isHidden = false
@@ -406,14 +462,17 @@ class ParentDashboardViewController: UIViewController {
                                 self.labelNotificationCount.isHidden = false
                                 
                                 self.labelNotificationCount.text = "\(  UIApplication.shared.applicationIconBadgeNumber   )"
+                                UIApplication.shared.applicationIconBadgeNumber  = 0
+                                
                             }else{
                                 UserDefaults.standard.set(abs(self.notificationArray.count - AppDelegate.localNotificationCount) , forKey: "localNotificationCount")
                                                         self.labelNotificationCount.isHidden = false
                                                         self.labelNotificationCount.text = "\( abs(self.notificationArray.count - AppDelegate.localNotificationCount))"
+                                
+                                ParentDashboardViewController.isFromViewDidAppear = false
+
                             }
-                            
-                        
-                            
+                   
                         }
                         
                     }

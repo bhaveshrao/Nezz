@@ -52,8 +52,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        self.logInTextFields[0].text = "bhaveshr970@gmail.com"
-        self.logInTextFields[1].text = "123456"
+//        self.logInTextFields[0].text = "testfori@mailinator.com"
+//        self.logInTextFields[1].text = "123456"
     }
     
 //    override func viewDidDisappear(_ animated: Bool) {
@@ -215,12 +215,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
                  
                     
-                    let tempDic = snapshot.value as! [String:String];
-                    AppDelegate.user = User(uid: (result?.user.uid)!, email: (result?.user.email)!, username: tempDic["username"]!)
+                    let tempDic = snapshot.value as! [String:Any];
+                    AppDelegate.user = User(uid: (result?.user.uid)!, email: (result?.user.email)!, username: tempDic["username"]! as! String)
                     
                     
                     let childRef = self.firebaseRefUsers.child((result?.user.uid)!)
-                    let tempUser = User(uid: (result?.user.uid)!, email: (result?.user.email)!, username: tempDic["username"]!)
+                    let tempUser = User(uid: (result?.user.uid)!, email: (result?.user.email)!, username: tempDic["username"]! as! String)
                     childRef.setValue(tempUser.toAnyObject())
                     
                     

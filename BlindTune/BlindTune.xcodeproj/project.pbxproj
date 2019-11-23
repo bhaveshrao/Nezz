@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E184BE8C72410540ECE4230C /* libPods-BlindTune.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE10BBF23160882068EE2ECC /* libPods-BlindTune.a */; };
+		ED04415D238521F200C6E6B4 /* TooDeep_Splash_Screen.png in Resources */ = {isa = PBXBuildFile; fileRef = ED04415C238521F200C6E6B4 /* TooDeep_Splash_Screen.png */; };
 		ED0A813121FDFACB006289FF /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0A813021FDFACB006289FF /* NotificationViewController.swift */; };
-		ED104B952295835B00F2247B /* Deep_AppSplash_Screen.png in Resources */ = {isa = PBXBuildFile; fileRef = ED104B942295835B00F2247B /* Deep_AppSplash_Screen.png */; };
 		ED2C071621FA1D390089ACBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2C071521FA1D390089ACBA /* AppDelegate.swift */; };
 		ED2C071B21FA1D390089ACBA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED2C071921FA1D390089ACBA /* Main.storyboard */; };
 		ED2C071E21FA1D390089ACBA /* BlindTune.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ED2C071C21FA1D390089ACBA /* BlindTune.xcdatamodeld */; };
@@ -58,9 +58,9 @@
 		A062B6DBCE67A6231E1C8223 /* Pods-BlindTune.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlindTune.release.xcconfig"; path = "Pods/Target Support Files/Pods-BlindTune/Pods-BlindTune.release.xcconfig"; sourceTree = "<group>"; };
 		C43A2063D78C622FDEE9704B /* Pods-BlindTune.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlindTune.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BlindTune/Pods-BlindTune.debug.xcconfig"; sourceTree = "<group>"; };
 		CE10BBF23160882068EE2ECC /* libPods-BlindTune.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BlindTune.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED04415C238521F200C6E6B4 /* TooDeep_Splash_Screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TooDeep_Splash_Screen.png; sourceTree = "<group>"; };
 		ED0A813021FDFACB006289FF /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
-		ED104B942295835B00F2247B /* Deep_AppSplash_Screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Deep_AppSplash_Screen.png; sourceTree = "<group>"; };
-		ED2C071221FA1D390089ACBA /* BlindTune.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlindTune.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED2C071221FA1D390089ACBA /* TooDeep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TooDeep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED2C071521FA1D390089ACBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED2C071A21FA1D390089ACBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ED2C071D21FA1D390089ACBA /* BlindTune.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BlindTune.xcdatamodel; sourceTree = "<group>"; };
@@ -139,7 +139,7 @@
 		ED2C070921FA1D390089ACBA = {
 			isa = PBXGroup;
 			children = (
-				ED104B942295835B00F2247B /* Deep_AppSplash_Screen.png */,
+				ED04415C238521F200C6E6B4 /* TooDeep_Splash_Screen.png */,
 				ED7CD3C4227CC9D00030549D /* splash@2x.png */,
 				ED7CD3C5227CC9D00030549D /* splash@3x.png */,
 				ED2C071421FA1D390089ACBA /* BlindTune */,
@@ -152,7 +152,7 @@
 		ED2C071321FA1D390089ACBA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ED2C071221FA1D390089ACBA /* BlindTune.app */,
+				ED2C071221FA1D390089ACBA /* TooDeep.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -257,7 +257,7 @@
 			);
 			name = BlindTune;
 			productName = BlindTune;
-			productReference = ED2C071221FA1D390089ACBA /* BlindTune.app */;
+			productReference = ED2C071221FA1D390089ACBA /* TooDeep.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -312,7 +312,6 @@
 				ED2C072321FA1D3B0089ACBA /* LaunchScreen.storyboard in Resources */,
 				ED7CD3C7227CC9D10030549D /* splash@3x.png in Resources */,
 				ED7486CA21FCBF73004F4472 /* GlacialIndifference-Italic.otf in Resources */,
-				ED104B952295835B00F2247B /* Deep_AppSplash_Screen.png in Resources */,
 				ED2C072021FA1D3B0089ACBA /* Assets.xcassets in Resources */,
 				EDE7A8A2222873290017DE6A /* Need_Help_Hotline.rtf in Resources */,
 				ED7CD3C6227CC9D10030549D /* splash@2x.png in Resources */,
@@ -320,6 +319,7 @@
 				EDEECE33223FA6670025E14B /* Nezz_GDPR Cоmрlіаnсе Prіvасу Pоlісу.rtf in Resources */,
 				EDEECE32223FA6670025E14B /* Nezz Community Guideline.rtf in Resources */,
 				ED358987220860B400AD709A /* GoogleService-Info.plist in Resources */,
+				ED04415D238521F200C6E6B4 /* TooDeep_Splash_Screen.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,6 +534,7 @@
 				CODE_SIGN_ENTITLEMENTS = BlindTune/BlindTune.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1.7;
 				DEVELOPMENT_TEAM = 9QHRFA73RJ;
 				INFOPLIST_FILE = BlindTune/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -541,8 +542,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.umar.nezz;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TooDeep;
 				PROVISIONING_PROFILE_SPECIFIER = Nezz_development_profile;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -557,6 +559,7 @@
 				CODE_SIGN_ENTITLEMENTS = BlindTune/BlindTune.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1.7;
 				DEVELOPMENT_TEAM = 9QHRFA73RJ;
 				INFOPLIST_FILE = BlindTune/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -564,8 +567,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.umar.nezz;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = TooDeep;
 				PROVISIONING_PROFILE_SPECIFIER = Nezz_distribution_profile;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;

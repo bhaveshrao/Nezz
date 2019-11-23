@@ -219,7 +219,7 @@ class SettingViewController: UIViewController, UITableViewDataSource, UITableVie
     func openLinkSharer(appId: String){
         
         if let name = NSURL(string: "https://itunes.apple.com/us/app/myapp/id" + appId + "?ls=1&mt=8") {
-            let message = "Need an anonymous place to vent? Try the Deep app, a supporting and caring community with no judgement."
+            let message = "Need an anonymous place to vent? Try the TooDeep app, a supporting and caring community with no judgement."
             let abc = "\n"
             let objectsToShare = [message,abc,name] as [Any]
             let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)

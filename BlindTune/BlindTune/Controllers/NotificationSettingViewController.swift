@@ -69,7 +69,7 @@ class NotificationSettingViewController: UIViewController, UITableViewDelegate, 
             if pushSettings != nil {
                 tableCell.switchNotification.isOn = self.pushSettings.nezzUpdate
             }
-            tableCell.labelTitle.text = "Deep Updates"
+            tableCell.labelTitle.text = "TooDeep Updates"
         }else{
             if pushSettings != nil {
                 tableCell.switchNotification.isOn = self.pushSettings.allPost

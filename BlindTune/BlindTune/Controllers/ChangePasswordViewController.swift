@@ -82,6 +82,7 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate{
         
         let childRef = self.firebaseRefUser.child(AppDelegate.user.uid)
         let tempUser = User(uid: AppDelegate.user.uid, email: AppDelegate.user.email, username: self.userNameTextField.text!)
+        
         AppDelegate.user = tempUser
         AppDelegate.isUserRegistered = true
         childRef.setValue(tempUser.toAnyObject())
@@ -123,7 +124,7 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate{
         case 2:
             let controller = self.storyboard?.instantiateViewController(withIdentifier: "NeedHelpViewController") as! NeedHelpViewController
             controller.resourceName = "Nezz_GDPR Cоmрlіаnсе Prіvасу Pоlісу"
-            controller.pageTitle  = "Prіvасу Pоlісу"
+            controller.pageTitle  = "Privacy Policy"
             self.navigationController?.pushViewController(controller, animated: true)
             break
         case 3:

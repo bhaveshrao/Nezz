@@ -18,7 +18,15 @@ class NeedHelpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = pageTitle
+        
+        
+
+        if pageTitle == "Prіvасу Pоlісу" {
+            self.titleLabel.text = "Privacy Policy"
+        }else{
+            self.titleLabel.text = pageTitle
+        }
+        
         // Do any additional setup after loading the view.
         let rtfPath = Bundle.main.url(forResource: resourceName, withExtension: "rtf")!
 

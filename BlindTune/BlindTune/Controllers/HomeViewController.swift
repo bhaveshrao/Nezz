@@ -39,7 +39,6 @@ class HomeViewController: UIViewController, UITableViewDelegate,UITableViewDataS
 
         getAudioPostList()
         
-        UIApplication.shared.applicationIconBadgeNumber = 0 
        
         
         Database.database().reference(withPath: "fcmToken").child(Messaging.messaging().fcmToken!)
@@ -76,10 +75,7 @@ class HomeViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     override func viewDidAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-       
-        
-       
-        
+            
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -194,7 +190,7 @@ class HomeViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     func popupUpdateDialogue(){
     
         
-        let alertMessage = "A new version of Deep is available, please update for advanced feature";
+        let alertMessage = "A new version of TooDeep is available, please update for advanced feature";
         let alert = UIAlertController(title: "New Version Available", message: alertMessage, preferredStyle: .alert)
         
         let okBtn = UIAlertAction(title: "Update", style: .default, handler: {(_ action: UIAlertAction) -> Void in
@@ -278,6 +274,8 @@ class HomeViewController: UIViewController, UITableViewDelegate,UITableViewDataS
     
     
     @IBAction func replyButtonClicked(_ sender: Any) {
+        
+        AppDelegate.isFromPushNotification  = false 
         
         if AppDelegate.isSkipClicked {
            self.setLoginRestriction()

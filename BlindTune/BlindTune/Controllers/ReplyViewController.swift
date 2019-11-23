@@ -174,7 +174,7 @@ class ReplyViewController: UIViewController,UITableViewDelegate, UITableViewData
         let tempArray = (self.audioPostDic["postId"] as! String).components(separatedBy: ".")
         
         let json = [
-            "title": "Deep",
+            "title": "TooDeep",
             "message": AppDelegate.user.username + " has commented on your post",
             "userkey" :userId,
             "commentedBy" : AppDelegate.user.uid,
@@ -204,12 +204,12 @@ class ReplyViewController: UIViewController,UITableViewDelegate, UITableViewData
 
         
         let json = [
-            "title": "Deep",
+            "title": "TooDeep",
             "message": AppDelegate.user.username + " has commented on your post",
             "userkeyArr" :userId,
             "commentedBy" : AppDelegate.user.uid,
             "notificationType" : "comment",
-//            "postId" : (tempArray.first)!
+            "postId" : (tempArray.first)!
 
             ] as [String : Any]
         

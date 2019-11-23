@@ -43,7 +43,7 @@ class CommentViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         if commentArray.isEmpty {
             
-            let alertVC = UIAlertController(title: "", message: "There is no comment on this post", preferredStyle: .alert)
+            let alertVC = UIAlertController(title: "", message: "There are no comments on this post", preferredStyle: .alert)
             let alertActionOkay = UIAlertAction(title: "Okay", style: .default) {
                 (_) in
                 self.navigationController?.popViewController(animated: true)
@@ -399,11 +399,12 @@ class CommentViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         
         let json = [
-            "title": "Deep",
+            "title": "TooDeep",
             "message": AppDelegate.user.username + " has commented on your post",
             "userkey" :userId,
             "commentedBy" : AppDelegate.user.uid,
-            "notificationType" : "comment"
+            "notificationType" : "comment",
+            "postId" : self.audioPostDic["postId"] as! String
         ]
         
         let jsonData = try! JSONSerialization.data(withJSONObject: json, options: [])

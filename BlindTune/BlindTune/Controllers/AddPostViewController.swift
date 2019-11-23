@@ -253,7 +253,7 @@ class AddPostViewController: UIViewController, UITextFieldDelegate, AVAudioRecor
                     let audioPost = AudioPost(userID: AppDelegate.user.uid, audioTitle: self.postTitleTextField.text!, audioName: (storageData?.name)!, audioURL: (url?.absoluteString)!, username: AppDelegate.user.username, timeCreated:(storageData?.timeCreated?.timeIntervalSinceReferenceDate)! , timeDuration: (self.sliderLastTimeLabel.text)!, postId :tempArray[0] , commentCount : 0)
                     self.firebaseRefAudioPost.child(tempArray[0]).setValue(audioPost.toAnyObject())
                     
-                    self.callForPushNotification()
+                    self.callForPushNotification(postId: tempArray[0])
                     
                     
                     let alerController = UIAlertController(title: "Congratulations!!", message: "Your audio has been posted successfully!!", preferredStyle: .alert)
@@ -322,7 +322,7 @@ class AddPostViewController: UIViewController, UITextFieldDelegate, AVAudioRecor
     }
     
     
-    func callForPushNotification() {
+    func callForPushNotification(postId: String) {
         let session = URLSession.shared
         let url = URL(string: "http://104.248.118.154:3000/api/sendnotificationall")!
         var request = URLRequest(url: url)
@@ -331,11 +331,12 @@ class AddPostViewController: UIViewController, UITextFieldDelegate, AVAudioRecor
         
      
         let json = [
-            "title": "Deep",
+            "title": "TooDeep",
             "message": AppDelegate.user.username + " has added a new post",
             "userkey" : AppDelegate.user.uid,
             "commentedBy" : AppDelegate.user.uid,
-            "notificationType" : "addPost"
+            "notificationType" : "addPost",
+            "postId" : postId
         ]
         
         let jsonData = try! JSONSerialization.data(withJSONObject: json, options: [])

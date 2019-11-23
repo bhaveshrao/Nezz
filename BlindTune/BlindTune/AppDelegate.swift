@@ -92,7 +92,6 @@ AppDelegate.isCheckedForUpdate = false
             AppDelegate.isSkipClicked = false
 
             AppDelegate.user = (NSKeyedUnarchiver.unarchiveObject(with: UserDefaults.standard.object(forKey: "LoggedInUser") as! Data) as! User)
-    
             setHomeToRoot()
         }
         
@@ -116,16 +115,16 @@ AppDelegate.isCheckedForUpdate = false
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
-        if let notificationCount = UserDefaults.standard.value(forKey: "localNotificationCount") {
-                  application.applicationIconBadgeNumber = (notificationCount as! Int)
-              }
+//        if let notificationCount = UserDefaults.standard.value(forKey: "localNotificationCount") {
+//                  application.applicationIconBadgeNumber = (notificationCount as! Int)
+//              }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         
     
-        
+        ParentDashboardViewController.isFromViewDidAppear = true
 //        if let notificationCount = UserDefaults.standard.value(forKey: "localNotificationCount") {
 //            UserDefaults.standard.set((notificationCount as! Int) +  UIApplication.shared.applicationIconBadgeNumber , forKey: "localNotificationCount")
 //             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "setNotificationCount"), object: nil)
@@ -146,10 +145,10 @@ AppDelegate.isCheckedForUpdate = false
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
-        if let notificationCount = UserDefaults.standard.value(forKey: "localNotificationCount") {
-            application.applicationIconBadgeNumber = (notificationCount as! Int)
-        }
-        
+//        if let notificationCount = UserDefaults.standard.value(forKey: "localNotificationCount") {
+//            application.applicationIconBadgeNumber = (notificationCount as! Int)
+//        }
+//
         
     }
 
@@ -169,15 +168,23 @@ AppDelegate.isCheckedForUpdate = false
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
        
        
-            AppDelegate.isFromPushNotification = true
 //            setHomeToRoot()
              AppDelegate.userInfo = ["postId":userInfo["postId"] as! String ,"commentedBy":userInfo["commentedBy"] as! String]
-        
             
+        if userInfo["notificationType"] as! String != "addPost" {
             if application.applicationState != .active {
-                  NotificationCenter.default.post(name: NSNotification.Name(rawValue: "callCommentScreenBy"), object: nil)
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "setNotificationCount"), object: nil)
-            }
+                           
+                           AppDelegate.isFromPushNotification = true
+
+                           if AppDelegate.user.uid != userInfo["commentedBy"] as! String {
+                               
+                               NotificationCenter.default.post(name: NSNotification.Name(rawValue: "callCommentScreenBy"), object: nil)
+                                              NotificationCenter.default.post(name: NSNotification.Name(rawValue: "setNotificationCount"), object: nil)
+                           }
+                            
+                       }
+        }
+           
             
           
     
