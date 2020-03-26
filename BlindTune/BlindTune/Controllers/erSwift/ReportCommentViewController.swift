@@ -73,7 +73,7 @@ class ReportCommentViewController: UIViewController, UITextViewDelegate {
                 reportTo = selectedDic["replyBy"] as! String
             }
         
-            let reportPost = ["date":timeStamp, "postId": postId, "reason": textView.text!, "reportBy":AppDelegate.user.uid,"reportTo": reportTo ] as [String : Any]
+            let reportPost = ["date":timeStamp, "postId": postId, "reason": textView.text!, "reportBy":AppDelegate.user._id,"reportTo": reportTo ] as [String : Any]
             self.dataBaseRefReportPost.child(selectedDic["postId"] as! String).setValue(reportPost)
             textView.text = "Comment here..."
             textView.textColor = UIColor.lightGray

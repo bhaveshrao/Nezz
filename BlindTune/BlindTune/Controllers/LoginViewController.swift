@@ -25,7 +25,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         
+        logInTextFields.forEach { (textField) in
+            textField.textColor = UIColor(displayP3Red: 0.25, green: 0.34, blue: 0.73, alpha: 1.0)
 
+        }
         indicatorContainerView.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -202,43 +205,43 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 }
                 
                 
-                self.firebaseRefUsers.child((result?.user.uid)!).observe(.value, with: { (snapshot) in
-                    
-                    if let _ =  snapshot.value as? NSNull {
-                        let alertVC = UIAlertController(title: "Error", message: "User Not Found!!", preferredStyle: .alert)
-                        let alertActionCancel = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                        alertVC.addAction(alertActionCancel)
-                        self.present(alertVC, animated: true, completion: nil)
-                        return
-                    }
-                    
-                
-                 
-                    
-                    let tempDic = snapshot.value as! [String:Any];
-                    AppDelegate.user = User(uid: (result?.user.uid)!, email: (result?.user.email)!, username: tempDic["username"]! as! String)
-                    
-                    
-                    let childRef = self.firebaseRefUsers.child((result?.user.uid)!)
-                    let tempUser = User(uid: (result?.user.uid)!, email: (result?.user.email)!, username: tempDic["username"]! as! String)
-                    childRef.setValue(tempUser.toAnyObject())
-                    
-                    
-                    let data = NSKeyedArchiver.archivedData(withRootObject: AppDelegate.user)
-                    UserDefaults.standard.set(data, forKey: "LoggedInUser")
-                    UserDefaults.standard.synchronize()
-                    
-                    AppDelegate.isUserRegistered = true
-                    
-                    
-                    return
-
-                })
+//                self.firebaseRefUsers.child((result?.user.uid)!).observe(.value, with: { (snapshot) in
+//
+//                    if let _ =  snapshot.value as? NSNull {
+//                        let alertVC = UIAlertController(title: "Error", message: "User Not Found!!", preferredStyle: .alert)
+//                        let alertActionCancel = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//                        alertVC.addAction(alertActionCancel)
+//                        self.present(alertVC, animated: true, completion: nil)
+//                        return
+//                    }
+//
+//
+//
+//
+//                    let tempDic = snapshot.value as! [String:Any];
+//                    AppDelegate.user = User(uid: (result?.user.uid)!, email: (result?.user.email)!, username: tempDic["username"]! as! String)
+//
+//
+//                    let childRef = self.firebaseRefUsers.child((result?.user.uid)!)
+//                    let tempUser = User(uid: (result?.user.uid)!, email: (result?.user.email)!, username: tempDic["username"]! as! String)
+//                    childRef.setValue(tempUser.toAnyObject())
+//
+//
+//                    let data = NSKeyedArchiver.archivedData(withRootObject: AppDelegate.user)
+//                    UserDefaults.standard.set(data, forKey: "LoggedInUser")
+//                    UserDefaults.standard.synchronize()
+//
+//                    AppDelegate.isUserRegistered = true
+//
+//
+//                    return
+//
+//                })
                 
                 AppDelegate.isSkipClicked = false
 
-                let controller = self.storyboard?.instantiateViewController(withIdentifier: "ParentDashboardViewController") as! ParentDashboardViewController
-                self.navigationController?.pushViewController(controller, animated: true)
+//                let controller = self.storyboard?.instantiateViewController(withIdentifier: "ParentDashboardViewController") as! ParentDashboardViewController
+//                self.navigationController?.pushViewController(controller, animated: true)
                 
             }else{
                 

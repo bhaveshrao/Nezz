@@ -12,14 +12,15 @@ import Firebase
 import Reachability
 import AVFoundation
 import UserNotifications
-
+import Mixpanel
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUserNotificationCenterDelegate{
 
     var window: UIWindow?
     static var delegateFlag = 0
-    static var reachablity = Reachability()!
+    static var reachablity:Reachability!
     static var user:User!
+    static var username:String!
     static var pushSettings:PushNotificationSetting!
     static var isFirstTime = false
     static var isUserRegistered = false
@@ -30,6 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     static var userInfo = [String:String]()
     var deviceIdArray = [Dictionary<String, Any>]()
     static var localNotificationCount = -1
+    
+    static var controllerType = ""
+
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -43,6 +47,12 @@ AppDelegate.isCheckedForUpdate = false
 //        options.clientID = "com.googleusercontent.apps.414820251131-06hmohqp126nsrkladh05dnu9v0rrefp"
 //        FirebaseApp.configure(options: options)
 
+        
+        do {
+            AppDelegate.reachablity = try Reachability()
+        }catch{
+            print(error)
+        }
         
         if #available(iOS 10.0, *) {
             // For iOS 10 display notification (sent via APNS)
@@ -62,6 +72,14 @@ AppDelegate.isCheckedForUpdate = false
         
     
         Messaging.messaging().shouldEstablishDirectChannel = true
+        
+//        if let deviceID = AppDelegate.user.deviceId as? String  {
+//            if let fcmToken = Messaging.messaging().fcmToken {
+//                
+//            }else{
+//                Messaging.messaging().fcmToken = deviceID
+//            }
+//        }
         
         application.registerForRemoteNotifications()
         
@@ -84,7 +102,7 @@ AppDelegate.isCheckedForUpdate = false
                 if !AppDelegate.isUserRegistered {
 //                    self.setRootController(isFirstTimeUser: self.deviceIdArray.isEmpty)
                     AppDelegate.isSkipClicked = true
-                    self.setHomeToRoot()
+//                    self.setHomeToRoot()
                 }
             }
         }else{
@@ -92,20 +110,41 @@ AppDelegate.isCheckedForUpdate = false
             AppDelegate.isSkipClicked = false
 
             AppDelegate.user = (NSKeyedUnarchiver.unarchiveObject(with: UserDefaults.standard.object(forKey: "LoggedInUser") as! Data) as! User)
-            setHomeToRoot()
+//            setHomeToRoot()
         }
         
         
         AppDelegate.isFromPushNotification = false
         
-      
-       
+        // Mix pannel intialization
         
+        Mixpanel.initialize(token: "2b3fac675d22aceb0d13e9b998a9d65c")
         
-        
+        // Opt a user out of data collection
+        Mixpanel.mainInstance().optOutTracking()
+
+        // Check a user's opt-out status
+        // Returns true if user is opted out of tracking locally
+        _ = Mixpanel.mainInstance().hasOptedOutTracking()
+
+
         return true
     }
+        
+    
+    func tokenRefreshNotification(notification: NSNotification) {
+      //  print("refresh token call")
+        
+        InstanceID.instanceID().instanceID { (result, error) in
+               if let error = error {
+                   print("Error fetching remote instange ID: \(error)")
+               } else if let result = result {
+            }
+           }
+    }
 
+    
+   
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -124,7 +163,7 @@ AppDelegate.isCheckedForUpdate = false
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         
     
-        ParentDashboardViewController.isFromViewDidAppear = true
+//        ParentDashboardViewController.isFromViewDidAppear = true
 //        if let notificationCount = UserDefaults.standard.value(forKey: "localNotificationCount") {
 //            UserDefaults.standard.set((notificationCount as! Int) +  UIApplication.shared.applicationIconBadgeNumber , forKey: "localNotificationCount")
 //             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "setNotificationCount"), object: nil)
@@ -176,13 +215,13 @@ AppDelegate.isCheckedForUpdate = false
                            
                            AppDelegate.isFromPushNotification = true
 
-                           if AppDelegate.user.uid != userInfo["commentedBy"] as! String {
+                           if AppDelegate.user._id != userInfo["commentedBy"] as! String {
                                
                                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "callCommentScreenBy"), object: nil)
                                               NotificationCenter.default.post(name: NSNotification.Name(rawValue: "setNotificationCount"), object: nil)
                            }
                             
-                       }
+                }
         }
            
             
@@ -264,15 +303,7 @@ AppDelegate.isCheckedForUpdate = false
     }
 
     
-    func setHomeToRoot()  {
-        
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let initialViewController:UIViewController
-        initialViewController = storyboard.instantiateViewController(withIdentifier: "HomeNav")
-        self.window?.rootViewController = initialViewController
-        self.window?.makeKeyAndVisible()
-    }
+  
     
     func isUpdateAvailable() throws -> Bool {
         guard let info = Bundle.main.infoDictionary,
@@ -286,9 +317,9 @@ AppDelegate.isCheckedForUpdate = false
             throw VersionError.invalidResponse
         }
         if let result = (json["results"] as? [Any])?.first as? [String: Any], let version = result["version"] as? String {
-            print("version in app store", version,currentVersion);
+            print("version in app store", (version as NSString).doubleValue, (currentVersion as NSString).doubleValue)
             
-            return version != currentVersion
+            return  (version as NSString).doubleValue !=  (currentVersion as NSString).doubleValue
         }
         throw VersionError.invalidResponse
     }

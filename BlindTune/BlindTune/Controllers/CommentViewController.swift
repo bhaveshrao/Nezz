@@ -355,11 +355,11 @@ class CommentViewController: UIViewController, UITableViewDelegate, UITableViewD
     func handleTextReplySendWith(message: String) {
         
        let randomeInt = Int.random(in: 500...50000)
-        let fileName = AppDelegate.user.uid + String(format: "%d", randomeInt)
+        let fileName = AppDelegate.user._id + String(format: "%d", randomeInt)
         
         let tempArray = (self.audioPostDic["postId"] as! String).components(separatedBy: ".")
         
-        let audioReplyPost = ReplyOnPost(replyTo: self.audioPostDic["userID"] as! String, replyBy: AppDelegate.user.uid, audioTitle: self.audioPostDic["audioTitle"] as! String, audioName: fileName , audioURL: "", timeCreated: Date().timeIntervalSince1970, timeDuration: "", postId: tempArray[0],  username: AppDelegate.user.username, replyType: "text", text: message,notificationType: "comment")
+        let audioReplyPost = ReplyOnPost(replyTo: self.audioPostDic["userID"] as! String, replyBy: AppDelegate.user._id, audioTitle: self.audioPostDic["audioTitle"] as! String, audioName: fileName , audioURL: "", timeCreated: Date().timeIntervalSince1970, timeDuration: "", postId: tempArray[0],  username: AppDelegate.user.username, replyType: "text", text: message,notificationType: "comment")
         
         self.commentArray.append(audioReplyPost.toAnyObject() as! [String : Any])
         self.commentArray = self.commentArray.sorted(by: { (value1, value2) -> Bool in
@@ -402,7 +402,7 @@ class CommentViewController: UIViewController, UITableViewDelegate, UITableViewD
             "title": "TooDeep",
             "message": AppDelegate.user.username + " has commented on your post",
             "userkey" :userId,
-            "commentedBy" : AppDelegate.user.uid,
+            "commentedBy" : AppDelegate.user._id,
             "notificationType" : "comment",
             "postId" : self.audioPostDic["postId"] as! String
         ]

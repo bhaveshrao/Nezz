@@ -177,7 +177,7 @@ class ReplyViewController: UIViewController,UITableViewDelegate, UITableViewData
             "title": "TooDeep",
             "message": AppDelegate.user.username + " has commented on your post",
             "userkey" :userId,
-            "commentedBy" : AppDelegate.user.uid,
+            "commentedBy" : AppDelegate.user._id,
             "notificationType" : "comment",
             "postId" : (tempArray.first)!
             ] as [String : Any]
@@ -207,7 +207,7 @@ class ReplyViewController: UIViewController,UITableViewDelegate, UITableViewData
             "title": "TooDeep",
             "message": AppDelegate.user.username + " has commented on your post",
             "userkeyArr" :userId,
-            "commentedBy" : AppDelegate.user.uid,
+            "commentedBy" : AppDelegate.user._id,
             "notificationType" : "comment",
             "postId" : (tempArray.first)!
 
@@ -347,7 +347,7 @@ class ReplyViewController: UIViewController,UITableViewDelegate, UITableViewData
         
         randomeInt = Int.random(in: 500...50000)
         
-        let fileName = AppDelegate.user.uid + String(format: "%d", randomeInt!) + ".m4a"
+        let fileName = AppDelegate.user._id + String(format: "%d", randomeInt!) + ".m4a"
         
         
         self.indicatorContainerView.isHidden = false
@@ -378,9 +378,17 @@ class ReplyViewController: UIViewController,UITableViewDelegate, UITableViewData
                     }else{
                         notificationType = "comment"
                     }
-
+ 
+                    var audioReplyPost:ReplyOnPost!
                     
-                    let audioReplyPost = ReplyOnPost(replyTo: self.audioPostDic["userID"] as! String, replyBy: AppDelegate.user.uid, audioTitle: self.audioPostDic["audioTitle"] as! String, audioName:(storageData?.name)! , audioURL: (url?.absoluteString)!, timeCreated: Date().timeIntervalSince1970, timeDuration: (self.sliderLastTimeLabel.text)!, postId: tempArray[0],  username: AppDelegate.user.username, replyType:"audio",text: "",notificationType: notificationType)
+                    if let userId = self.audioPostDic["userID"] {
+                        
+                        audioReplyPost = ReplyOnPost(replyTo: userId as! String, replyBy: AppDelegate.user._id, audioTitle: self.audioPostDic["audioTitle"] as! String, audioName:(storageData?.name)! , audioURL: (url?.absoluteString)!, timeCreated: Date().timeIntervalSince1970, timeDuration: (self.sliderLastTimeLabel.text)!, postId: tempArray[0],  username: AppDelegate.user.username, replyType:"audio",text: "",notificationType: notificationType)
+                    }else{
+                        
+                            audioReplyPost = ReplyOnPost(replyTo: self.audioPostDic["replyBy"] as! String, replyBy: AppDelegate.user._id, audioTitle: self.audioPostDic["audioTitle"] as! String, audioName:(storageData?.name)! , audioURL: (url?.absoluteString)!, timeCreated: Date().timeIntervalSince1970, timeDuration: (self.sliderLastTimeLabel.text)!, postId: tempArray[0],  username: AppDelegate.user.username, replyType:"audio",text: "",notificationType: notificationType)
+                    }
+                    
                     
                     
                     let tempArray2 = fileName.components(separatedBy: ".")
@@ -433,7 +441,7 @@ class ReplyViewController: UIViewController,UITableViewDelegate, UITableViewData
         
         randomeInt = Int.random(in: 500...50000)
         
-        let fileName = AppDelegate.user.uid + String(format: "%d", randomeInt!)
+        let fileName = AppDelegate.user._id + String(format: "%d", randomeInt!)
         
         
         self.indicatorContainerView.isHidden = false
@@ -454,7 +462,16 @@ class ReplyViewController: UIViewController,UITableViewDelegate, UITableViewData
                                notificationType = "comment"
                            }
         
-        let audioReplyPost = ReplyOnPost(replyTo: self.audioPostDic["userID"] as! String, replyBy: AppDelegate.user.uid, audioTitle: self.audioPostDic["audioTitle"] as! String, audioName: fileName , audioURL: "", timeCreated: Date().timeIntervalSince1970, timeDuration: "", postId: tempArray[0],  username: AppDelegate.user.username, replyType: "text", text: message,notificationType: notificationType)
+                        var audioReplyPost:ReplyOnPost!
+                          if let userId = self.audioPostDic["userID"] {
+                              
+                              audioReplyPost = ReplyOnPost(replyTo: userId as! String, replyBy: AppDelegate.user._id, audioTitle: self.audioPostDic["audioTitle"] as! String, audioName: fileName , audioURL: "", timeCreated: Date().timeIntervalSince1970, timeDuration: "", postId: tempArray[0],  username: AppDelegate.user.username, replyType: "text", text: message,notificationType: notificationType)
+                          }else{
+                              
+                                  audioReplyPost = ReplyOnPost(replyTo: self.audioPostDic["replyBy"] as! String, replyBy: AppDelegate.user._id, audioTitle: self.audioPostDic["audioTitle"] as! String, audioName: fileName , audioURL: "", timeCreated: Date().timeIntervalSince1970, timeDuration: "", postId: tempArray[0],  username: AppDelegate.user.username, replyType: "text", text: message,notificationType: notificationType)
+                          }
+        
+        
         
         
         

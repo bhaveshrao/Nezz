@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 
+
 class ChangePasswordViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
@@ -80,8 +81,8 @@ class ChangePasswordViewController: UIViewController, UITextFieldDelegate{
         }
         
         
-        let childRef = self.firebaseRefUser.child(AppDelegate.user.uid)
-        let tempUser = User(uid: AppDelegate.user.uid, email: AppDelegate.user.email, username: self.userNameTextField.text!)
+        let childRef = self.firebaseRefUser.child(AppDelegate.user._id)
+        let tempUser = User(_id: AppDelegate.user._id, email: AppDelegate.user.email, username: self.userNameTextField.text! ,isVerified: false)
         
         AppDelegate.user = tempUser
         AppDelegate.isUserRegistered = true

@@ -19,8 +19,13 @@ struct AudioPost {
     let timeDuration : String
     let postId : String
     let commentCount : Int
+    let postType:String
+    let text:String
     
-    init(userID: String, audioTitle: String, audioName: String, audioURL: String, username:String, timeCreated : Double, timeDuration:String, postId: String , commentCount : Int) {
+
+    init(userID: String, audioTitle: String, audioName: String, audioURL: String, username:String,
+         timeCreated : Double, timeDuration:String, postId: String , commentCount : Int,
+         postType:String, text:String) {
         self.userID = userID
         self.audioTitle = audioTitle
         self.audioName = audioName
@@ -30,6 +35,8 @@ struct AudioPost {
         self.timeDuration = timeDuration
         self.postId = postId
         self.commentCount = commentCount
+        self.postType = postType
+        self.text = text
     }
     
     func toAnyObject() -> Any {
@@ -42,7 +49,9 @@ struct AudioPost {
             "timeCreated" :timeCreated,
             "timeDuration" : timeDuration,
             "postId" : postId,
-            "commentCount" : commentCount
+            "commentCount" : commentCount,
+            "postType" :postType,
+            "text" : text
         ]
     }
     

@@ -24,20 +24,17 @@ class AudioTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var commenButton: UIButton!
-    
     @IBOutlet weak var indicatorContainerView: UIView!
     @IBOutlet weak var activityIndicator: NVActivityIndicatorView!
     var session = AVAudioSession.sharedInstance()
-
     @IBOutlet weak var imageWidthConstraint: NSLayoutConstraint!
+    
     var audioPlayer: AVAudioPlayer!
     var url:String!
-
     var timer: Timer?
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         
         self.audioCurrentTimeLabel.text = "0:00"
         self.audioLastTimeLabel.text = "0:00"
@@ -46,6 +43,8 @@ class AudioTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         
         self.imageWidthConstraint.constant = 0
         
+        
+
         self.viewTrack.layer.borderColor = UIColor(displayP3Red: 11.0/255.0, green: 208.0/255.0, blue: 250.0/255.0, alpha: 1.0).cgColor
         self.viewTrack.layer.borderWidth = 1.0
         self.viewTrack.layer.cornerRadius = 7
@@ -54,7 +53,7 @@ class AudioTableViewCell: UITableViewCell, AVAudioPlayerDelegate {
         audioSlider.setThumbImage(UIImage(named: "toggle"), for: .normal)
         audioSlider.setThumbImage(UIImage(named: "toggle"), for: .highlighted)
 
-//        audioSlider.transform = CGAffineTransform(scaleX: 0.75, y: 0.85)
+//      audioSlider.transform = CGAffineTransform(scaleX: 0.75, y: 0.85)
 
     }
     

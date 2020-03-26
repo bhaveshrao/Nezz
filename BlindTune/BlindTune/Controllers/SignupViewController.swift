@@ -133,65 +133,67 @@ class SignupViewController: UIViewController, UITextFieldDelegate{
         self.activityIndicator.startAnimating()
         
         
-        Auth.auth().createUser(withEmail: signUpTextFields[1].text!, password: signUpTextFields[2].text!) { (authResult, error) in
-            if error == nil {
-                
-                AppDelegate.isUserRegistered = true
-                self.indicatorContainerView.isHidden = true
-                self.activityIndicator.stopAnimating()
-
-                Auth.auth().currentUser?.sendEmailVerification(completion: { (error) in
-                    
-                    let alert = UIAlertController(title: "Account Created", message: "Please verify your email by confirming the sent link.", preferredStyle: UIAlertController.Style.alert)
-                    
-                    
-                    
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (alert) in
-                        if AppDelegate.isFirstTime {
-                            let controller = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-                            self.navigationController?.pushViewController(controller, animated: true)
-                        }else{
-                            self.navigationController?.popViewController(animated: true)
-                        }
-                    }))
-                    
-                    
-                    self.present(alert, animated: true, completion: nil)
-
-                })
-                
-                
-                Auth.auth().signIn(withEmail:self.signUpTextFields[1].text! , password: self.signUpTextFields[2].text!, completion: { (result, error) in
-                    if error == nil {
-                        
-                    
-                        
-                        let childRef = self.firebaseRefUser.child((result?.user.uid)!)
-                        let tempUser = User(uid: (result?.user.uid)!, email: (result?.user.email)!, username: self.signUpTextFields[0].text!)
-                        AppDelegate.user = tempUser
-                        childRef.setValue(tempUser.toAnyObject())
-                        let childPush = self.firebaseRefPushNotificationSetting.child((result?.user.uid)!)
-                        let pushSetting = PushNotificationSetting(commentOnMyPost: true, nezzUpdate: true, allPost: true, userId: (result?.user.uid)!)
-                        childPush.setValue(pushSetting.toAnyObject())
-                        
-//                        let controller = self.storyboard?.instantiateViewController(withIdentifier: "ParentDashboardViewController") as! ParentDashboardViewController
-//                        self.navigationController?.pushViewController(controller, animated: true)
-                        
-                    }
-                    
-                })
-            }else{
-                
-                self.indicatorContainerView.isHidden = true
-                self.activityIndicator.stopAnimating()
-
-            
-            let alert = UIAlertController(title: "Error!", message:(error?.localizedDescription)!, preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
         
-    }
+        
+//        Auth.auth().createUser(withEmail: signUpTextFields[1].text!, password: signUpTextFields[2].text!) { (authResult, error) in
+//            if error == nil {
+//                
+//                AppDelegate.isUserRegistered = true
+//                self.indicatorContainerView.isHidden = true
+//                self.activityIndicator.stopAnimating()
+//
+//                Auth.auth().currentUser?.sendEmailVerification(completion: { (error) in
+//                    
+//                    let alert = UIAlertController(title: "Account Created", message: "Please verify your email by confirming the sent link.", preferredStyle: UIAlertController.Style.alert)
+//                    
+//                    
+//                    
+//                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (alert) in
+//                        if AppDelegate.isFirstTime {
+//                            let controller = self.storyboard?.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+//                            self.navigationController?.pushViewController(controller, animated: true)
+//                        }else{
+//                            self.navigationController?.popViewController(animated: true)
+//                        }
+//                    }))
+//                    
+//                    
+//                    self.present(alert, animated: true, completion: nil)
+//
+//                })
+//                
+//                
+//                Auth.auth().signIn(withEmail:self.signUpTextFields[1].text! , password: self.signUpTextFields[2].text!, completion: { (result, error) in
+//                    if error == nil {
+//                        
+//                    
+//                        
+//                        let childRef = self.firebaseRefUser.child((result?.user._id)!)
+//                        let tempUser = User(uid: (result?.user._id)!, email: (result?.user.email)!, username: self.signUpTextFields[0].text!)
+//                        AppDelegate.user = tempUser
+//                        childRef.setValue(tempUser.toAnyObject())
+//                        let childPush = self.firebaseRefPushNotificationSetting.child((result?.user._id)!)
+//                        let pushSetting = PushNotificationSetting(commentOnMyPost: true, nezzUpdate: true, allPost: true, userId: (result?.user._id)!)
+//                        childPush.setValue(pushSetting.toAnyObject())
+//                        
+////                        let controller = self.storyboard?.instantiateViewController(withIdentifier: "ParentDashboardViewController") as! ParentDashboardViewController
+////                        self.navigationController?.pushViewController(controller, animated: true)
+//                        
+//                    }
+//                    
+//                })
+//            }else{
+//                
+//                self.indicatorContainerView.isHidden = true
+//                self.activityIndicator.stopAnimating()
+//
+//            
+//            let alert = UIAlertController(title: "Error!", message:(error?.localizedDescription)!, preferredStyle: UIAlertController.Style.alert)
+//            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+//            self.present(alert, animated: true, completion: nil)
+//        }
+//        
+//    }
 }
     @IBAction func yesClicked(_ sender: Any) {
         ageConfirmationFlag = true

@@ -62,7 +62,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 })
                 
                 self.audioPostArray = self.audioPostArray.filter({ (value) -> Bool in
-                    value["userID"] as! String == AppDelegate.user.uid
+                    value["userID"] as! String == AppDelegate.user._id
                 })
                 
                 DispatchQueue.main.async {

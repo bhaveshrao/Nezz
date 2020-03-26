@@ -38,7 +38,7 @@ class AddPostViewController: UIViewController, UITextFieldDelegate, AVAudioRecor
 
     var timer: Timer?
     var timerForRecorder: Timer?
-
+    
     var timerFor2Minutes: Timer?
     var randomeInt:Int?
 
@@ -135,6 +135,8 @@ class AddPostViewController: UIViewController, UITextFieldDelegate, AVAudioRecor
 
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
             audioRecorder.delegate = self
+            audioRecorder.prepareToRecord()
+            audioRecorder.isMeteringEnabled = true
             audioRecorder.record()
             
             timerFor2Minutes = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false, block: { (timer) in
@@ -230,7 +232,7 @@ class AddPostViewController: UIViewController, UITextFieldDelegate, AVAudioRecor
         
         randomeInt = Int.random(in: 1...500)
 
-        let fileName = AppDelegate.user.uid + String(format: "%d", randomeInt!) + ".m4a"
+        let fileName = AppDelegate.user._id + String(format: "%d", randomeInt!) + ".m4a"
         
        
         self.indicatorContainerView.isHidden = false
@@ -250,7 +252,9 @@ class AddPostViewController: UIViewController, UITextFieldDelegate, AVAudioRecor
                     let tempArray = (storageData?.name)!.components(separatedBy: ".")
 
                     
-                    let audioPost = AudioPost(userID: AppDelegate.user.uid, audioTitle: self.postTitleTextField.text!, audioName: (storageData?.name)!, audioURL: (url?.absoluteString)!, username: AppDelegate.user.username, timeCreated:(storageData?.timeCreated?.timeIntervalSinceReferenceDate)! , timeDuration: (self.sliderLastTimeLabel.text)!, postId :tempArray[0] , commentCount : 0)
+                    let audioPost = AudioPost(userID: AppDelegate.user._id, audioTitle: self.postTitleTextField.text!, audioName: (storageData?.name)!, audioURL: (url?.absoluteString)!, username: AppDelegate.user.username, timeCreated:(storageData?.timeCreated?.timeIntervalSinceReferenceDate)!
+                        , timeDuration: (self.sliderLastTimeLabel.text)!,
+                          postId :tempArray[0] , commentCount : 0, postType: "audio",text: "")
                     self.firebaseRefAudioPost.child(tempArray[0]).setValue(audioPost.toAnyObject())
                     
                     self.callForPushNotification(postId: tempArray[0])
@@ -333,8 +337,8 @@ class AddPostViewController: UIViewController, UITextFieldDelegate, AVAudioRecor
         let json = [
             "title": "TooDeep",
             "message": AppDelegate.user.username + " has added a new post",
-            "userkey" : AppDelegate.user.uid,
-            "commentedBy" : AppDelegate.user.uid,
+            "userkey" : AppDelegate.user._id,
+            "commentedBy" : AppDelegate.user._id,
             "notificationType" : "addPost",
             "postId" : postId
         ]
@@ -483,15 +487,5 @@ class AddPostViewController: UIViewController, UITextFieldDelegate, AVAudioRecor
 }
 
 
-extension TimeInterval {
-    func toMM_SS() -> String {
-        let interval = self
-        let componentFormatter = DateComponentsFormatter()
-        
-        componentFormatter.unitsStyle = .positional
-        componentFormatter.zeroFormattingBehavior = .pad
-        componentFormatter.allowedUnits = [.minute, .second]
-        return componentFormatter.string(from: interval) ?? ""
-    }
-}
+
 

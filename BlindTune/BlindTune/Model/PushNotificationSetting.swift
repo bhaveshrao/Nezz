@@ -13,14 +13,14 @@ class PushNotificationSetting: NSObject {
     var commentOnMyPost: Bool
     var nezzUpdate: Bool
     var allPost: Bool
-    var userId: String
+    var _id: String
    
     
-    init(commentOnMyPost: Bool, nezzUpdate: Bool, allPost : Bool, userId: String) {
+    init(commentOnMyPost: Bool, nezzUpdate: Bool, allPost : Bool, _id: String) {
         self.commentOnMyPost = commentOnMyPost
         self.nezzUpdate = nezzUpdate
         self.allPost = allPost
-        self.userId = userId
+        self._id = _id
     }
     
     func toAnyObject() -> Any {
@@ -28,7 +28,7 @@ class PushNotificationSetting: NSObject {
             "commentOnMyPost": commentOnMyPost,
             "nezzUpdate": nezzUpdate,
             "allPost": allPost,
-            "userId": userId
+            "_id": _id
         ]
     }
 }

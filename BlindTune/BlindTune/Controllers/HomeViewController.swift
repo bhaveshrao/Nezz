@@ -40,7 +40,7 @@ class HomeViewController: UIViewController, UITableViewDelegate,UITableViewDataS
         getAudioPostList()
         
        
-        
+    
         Database.database().reference(withPath: "fcmToken").child(Messaging.messaging().fcmToken!)
         
         
@@ -266,7 +266,7 @@ class HomeViewController: UIViewController, UITableViewDelegate,UITableViewDataS
                     AppDelegate.currentAudioPlayer.forEach { (tempAudioPlayer) in
                         tempAudioPlayer.stop()
                     }
-                    AppDelegate.currentAudioPlayer.removeAll()
+        AppDelegate.currentAudioPlayer.removeAll()
         }
     }
   

@@ -18,9 +18,7 @@ class  SettingTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-
-        //        audioSlider.transform = CGAffineTransform(scaleX: 0.75, y: 0.85)
+        //audioSlider.transform = CGAffineTransform(scaleX: 0.75, y: 0.85)
         
     }
     

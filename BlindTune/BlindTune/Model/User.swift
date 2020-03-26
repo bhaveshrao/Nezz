@@ -29,25 +29,27 @@
 import Foundation
 import Firebase
 
-class User:NSObject, NSCoding{
+class User:NSObject, NSCoding,  Codable{
   
-  let uid: String
+  let _id: String
   let email: String
   let username :String
   let deviceId : String
+  let isVerified : Bool
 
-  init(authData: Firebase.User) {
-    uid = authData.uid
-    email = authData.email!
-    username = authData.displayName!
-    deviceId = Messaging.messaging().fcmToken!
-  }
-  
-    init(uid: String, email: String, username: String) {
-    self.uid = uid
+//  init(authData: Firebase.User) {
+//    _id = authData.uid
+//    email = authData.email!
+//    username = authData.displayName!
+//    deviceId = Messaging.messaging().fcmToken!
+//  }
+//
+    init(_id: String, email: String, username: String, isVerified:Bool) {
+    self._id = _id
     self.email = email
     self.username = username
     self.deviceId = Messaging.messaging().fcmToken!
+    self.isVerified = isVerified
 
   }
     
@@ -57,22 +59,27 @@ class User:NSObject, NSCoding{
             "password": "",
             "username": username,
             "deviceId": Messaging.messaging().fcmToken!,
-            "uid" : uid
+            "_id" : _id,
+            "isVerified" : isVerified
         ]
     }
     
     required init(coder decoder: NSCoder) {
-        self.uid = decoder.decodeObject(forKey: "uid") as? String ?? ""
+        self._id = decoder.decodeObject(forKey: "_id") as? String ?? ""
         self.email =  decoder.decodeObject(forKey: "email") as? String ?? ""
          self.username =  decoder.decodeObject(forKey: "username") as? String ?? ""
          self.deviceId =  decoder.decodeObject(forKey: "deviceId") as? String ?? ""
+         self.isVerified = decoder.decodeObject(forKey: "isVerified") as? Bool ?? false
+        
     }
     
     func encode(with coder: NSCoder) {
-        coder.encode(uid, forKey: "uid")
+        coder.encode(_id, forKey: "_id")
         coder.encode(email, forKey: "email")
         coder.encode(username, forKey: "username")
         coder.encode(deviceId, forKey: "deviceId")
+        coder.encode(isVerified, forKey: "isVerified")
+
         }
     
 //    required init(coder decoder: NSCoder) {
